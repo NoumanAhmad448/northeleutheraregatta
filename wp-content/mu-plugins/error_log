@@ -10,3 +10,10 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home1/thesunr8/public_html/website_a08c99d5/wp-content/mu-plugins/sso.php on line 69
+<<<<<<< HEAD
+=======
+[06-Oct-2024 23:37:22 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/thesunr8/public_html/website_a08c99d5/wp-content/mu-plugins/sso.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/thesunr8/public_html/website_a08c99d5/wp-content/mu-plugins/sso.php on line 69
+>>>>>>> 01e6587 (ädded files)

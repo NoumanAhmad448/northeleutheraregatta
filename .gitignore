@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 wp-config.php
 wp-content/uploads/2024*
 wp-content\endurance-page-cache/*
+=======
+wp-config.php
+wp-content/uploads/2024*
+wp-content\endurance-page-cache/*
+>>>>>>> 01e6587 (ädded files)
 .htaccess

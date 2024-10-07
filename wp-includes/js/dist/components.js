@@ -52751,6 +52751,7 @@ function subYears(date, amount) {
   return addYears(date, -amount);
 }
 
+<<<<<<< HEAD
 var Month;
 (function (Month) {
     Month[Month["JANUARY"] = 0] = "JANUARY";
@@ -52865,6 +52866,122 @@ var useLilius = function (_a) {
         deselectRange: deselectRange,
         calendar: calendar,
     };
+=======
+var Month;
+(function (Month) {
+    Month[Month["JANUARY"] = 0] = "JANUARY";
+    Month[Month["FEBRUARY"] = 1] = "FEBRUARY";
+    Month[Month["MARCH"] = 2] = "MARCH";
+    Month[Month["APRIL"] = 3] = "APRIL";
+    Month[Month["MAY"] = 4] = "MAY";
+    Month[Month["JUNE"] = 5] = "JUNE";
+    Month[Month["JULY"] = 6] = "JULY";
+    Month[Month["AUGUST"] = 7] = "AUGUST";
+    Month[Month["SEPTEMBER"] = 8] = "SEPTEMBER";
+    Month[Month["OCTOBER"] = 9] = "OCTOBER";
+    Month[Month["NOVEMBER"] = 10] = "NOVEMBER";
+    Month[Month["DECEMBER"] = 11] = "DECEMBER";
+})(Month || (Month = {}));
+var Day;
+(function (Day) {
+    Day[Day["SUNDAY"] = 0] = "SUNDAY";
+    Day[Day["MONDAY"] = 1] = "MONDAY";
+    Day[Day["TUESDAY"] = 2] = "TUESDAY";
+    Day[Day["WEDNESDAY"] = 3] = "WEDNESDAY";
+    Day[Day["THURSDAY"] = 4] = "THURSDAY";
+    Day[Day["FRIDAY"] = 5] = "FRIDAY";
+    Day[Day["SATURDAY"] = 6] = "SATURDAY";
+})(Day || (Day = {}));
+var inRange = function (date, min, max) {
+    return (isEqual(date, min) || isAfter(date, min)) && (isEqual(date, max) || isBefore(date, max));
+};
+var index_es_clearTime = function (date) { return set(date, { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }); };
+var useLilius = function (_a) {
+    var _b = _a === void 0 ? {} : _a, _c = _b.weekStartsOn, weekStartsOn = _c === void 0 ? Day.SUNDAY : _c, _d = _b.viewing, initialViewing = _d === void 0 ? new Date() : _d, _e = _b.selected, initialSelected = _e === void 0 ? [] : _e, _f = _b.numberOfMonths, numberOfMonths = _f === void 0 ? 1 : _f;
+    var _g = (0,external_React_.useState)(initialViewing), viewing = _g[0], setViewing = _g[1];
+    var viewToday = (0,external_React_.useCallback)(function () { return setViewing(startOfToday()); }, [setViewing]);
+    var viewMonth = (0,external_React_.useCallback)(function (month) { return setViewing(function (v) { return setMonth(v, month); }); }, []);
+    var viewPreviousMonth = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return subMonths(v, 1); }); }, []);
+    var viewNextMonth = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return addMonths(v, 1); }); }, []);
+    var viewYear = (0,external_React_.useCallback)(function (year) { return setViewing(function (v) { return setYear(v, year); }); }, []);
+    var viewPreviousYear = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return subYears(v, 1); }); }, []);
+    var viewNextYear = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return addYears(v, 1); }); }, []);
+    var _h = (0,external_React_.useState)(initialSelected.map(index_es_clearTime)), selected = _h[0], setSelected = _h[1];
+    var clearSelected = function () { return setSelected([]); };
+    var isSelected = (0,external_React_.useCallback)(function (date) { return selected.findIndex(function (s) { return isEqual(s, date); }) > -1; }, [selected]);
+    var select = (0,external_React_.useCallback)(function (date, replaceExisting) {
+        if (replaceExisting) {
+            setSelected(Array.isArray(date) ? date : [date]);
+        }
+        else {
+            setSelected(function (selectedItems) { return selectedItems.concat(Array.isArray(date) ? date : [date]); });
+        }
+    }, []);
+    var deselect = (0,external_React_.useCallback)(function (date) {
+        return setSelected(function (selectedItems) {
+            return Array.isArray(date)
+                ? selectedItems.filter(function (s) { return !date.map(function (d) { return d.getTime(); }).includes(s.getTime()); })
+                : selectedItems.filter(function (s) { return !isEqual(s, date); });
+        });
+    }, []);
+    var toggle = (0,external_React_.useCallback)(function (date, replaceExisting) { return (isSelected(date) ? deselect(date) : select(date, replaceExisting)); }, [deselect, isSelected, select]);
+    var selectRange = (0,external_React_.useCallback)(function (start, end, replaceExisting) {
+        if (replaceExisting) {
+            setSelected(eachDayOfInterval({ start: start, end: end }));
+        }
+        else {
+            setSelected(function (selectedItems) { return selectedItems.concat(eachDayOfInterval({ start: start, end: end })); });
+        }
+    }, []);
+    var deselectRange = (0,external_React_.useCallback)(function (start, end) {
+        setSelected(function (selectedItems) {
+            return selectedItems.filter(function (s) {
+                return !eachDayOfInterval({ start: start, end: end })
+                    .map(function (d) { return d.getTime(); })
+                    .includes(s.getTime());
+            });
+        });
+    }, []);
+    var calendar = (0,external_React_.useMemo)(function () {
+        return eachMonthOfInterval({
+            start: startOfMonth(viewing),
+            end: endOfMonth(addMonths(viewing, numberOfMonths - 1)),
+        }).map(function (month) {
+            return eachWeekOfInterval({
+                start: startOfMonth(month),
+                end: endOfMonth(month),
+            }, { weekStartsOn: weekStartsOn }).map(function (week) {
+                return eachDayOfInterval({
+                    start: startOfWeek(week, { weekStartsOn: weekStartsOn }),
+                    end: endOfWeek(week, { weekStartsOn: weekStartsOn }),
+                });
+            });
+        });
+    }, [viewing, weekStartsOn, numberOfMonths]);
+    return {
+        clearTime: index_es_clearTime,
+        inRange: inRange,
+        viewing: viewing,
+        setViewing: setViewing,
+        viewToday: viewToday,
+        viewMonth: viewMonth,
+        viewPreviousMonth: viewPreviousMonth,
+        viewNextMonth: viewNextMonth,
+        viewYear: viewYear,
+        viewPreviousYear: viewPreviousYear,
+        viewNextYear: viewNextYear,
+        selected: selected,
+        setSelected: setSelected,
+        clearSelected: clearSelected,
+        isSelected: isSelected,
+        select: select,
+        deselect: deselect,
+        toggle: toggle,
+        selectRange: selectRange,
+        deselectRange: deselectRange,
+        calendar: calendar,
+    };
+>>>>>>> 01e6587 (ädded files)
 };
 
 

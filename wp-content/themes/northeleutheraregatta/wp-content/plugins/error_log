@@ -1,0 +1,8 @@
+[21-May-2024 11:53:36 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/thesunr8/public_html/website_a08c99d5/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/thesunr8/public_html/website_a08c99d5/wp-content/plugins/hello.php on line 69
+[22-May-2024 13:42:51 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/thesunr8/public_html/website_a08c99d5/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/thesunr8/public_html/website_a08c99d5/wp-content/plugins/hello.php on line 69
